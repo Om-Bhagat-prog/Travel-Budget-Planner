@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title> Travel Budget Planner</title>
+
+        <link rel="styleshet" href="style.css" />
+    </head>
+    <body>
+        <main class="app">
+            <section class = "hero">
+                <p class = "eyebrow">Travel Tools Collection</p>
+                <h1>Travel Budget Planner</h1>
+                <p>
+                    Plan your trip costs before you travel. Enter your destination,
+                    number of days, travelers, and estimated expenses to build a 
+                    clear travel budget.
+                </p>
+            </section>
+
+            <section class="planner-layout">
+                <section class="card form-card">
+                    <h2>Trip Details</h2>
+
+                    <form id = "budgetForm">
+                        <div class = "form-group">
+                            <label for = "destination">Destination</label>
+                            <input 
+                                type="text"
+                                id="destination"
+                                placeholder="Example: Boston"
+                            />
+                        </div>
+
+                        <div class = "form row">
+                            <div class = "form-group">
+                                <label for = "days">Number of Days</label>
+                                <input
+                                    type = "number"
+                                    if = "days"
+                                    placeholder = "3"
+                                />
+                            </div>
+
+                            <div class = "form group">
+                                <label for = "travelers">Travelers</label>
+                                <input
+                                    type="number"
+                                    id="travelers"
+                                    placeholder="2"
+                                />
+                            </div>
+                        </div>
+
+                        <div class = "form-group">
+                            <label for = "hotelCost">Hotel Cost per Night ($)</label>
+                            <input
+                                type="number"
+                                id="hotelCost"
+                                placeHolder="150"
+                            />
+                        </div>
+
+                        <div class = "form-group">
+                            <label for = "foodCost">Food Cost Per Person Per Day ($)</label>
+                            <input
+                                type="number"
+                                id="foodCost"
+                                placeHolder="40"
+                            />
+                        </div>
+
+                        <div class="form-group">
+                            <label for = "transportCost"> Transportation Cost ($)</label>
+                            <input
+                                type="number"
+                                id="transportCost"
+                                placeholder="120"
+                            />
+                        </div>
+
+                        <div class = "form-group">
+                            <label for = "activityCost">Activity Cost ($)</label>
+                            <input
+                                type="number"
+                                id="activityCost"
+                                placeholder="200"
+                            />
+                        </div>
+
+                        <div class = "form-group">
+                            <label for = "extraPercent">Extra Budget Percentage (%)</label>
+                            <input
+                                type = "number"
+                                id = "extraPercent"
+                                placeHolder="10"
+                            />
+                        </div>
+
+                        <div class = "button-group">
+                            <button type = "submit">Calculate Budget</button>
+                            <button type = "button">Reset</button>
+                            <button type = "button">Print Summary</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class = "card results-card">
+                    <p class = "eyebrow">Budget Summary</p>
+                    <h2>Your Trip Estimate</h2>
+
+                    <div class = "empty-results">
+                        <p>
+                            Your budget results will appear here after you enter
+                            your trip details and click calculate.
+                        </p>
+                    </div>
+
+                    <div class = "result-list">
+                        <div class = "result-item">
+                            <span>Hotel Total</span>
+                            <strong>$0.00</strong>
+                        </div>
+
+                        <div class = "result-item">
+                            <span>Food Total</span>
+                            <strong>$0.00</strong>
+                        </div>
+
+                        <div class = "result-item">
+                            <span>Transportation</span>
+                            <strong>$0.00</strong>
+                        </div>
+
+                        <div class = "result-item">
+                            <span>Activities</span>
+                            <strong>$0.00</strong>
+                        </div>
+
+                        <div class = "result-item">
+                            <span>Extra Budget</span>
+                            <strong>$0.00</strong>
+                        </div>
+
+                        <div class = "result-item total">
+                            <span>Total Trip Cost</span>
+                            <strong>$0.00</strong>
+                        </div>
+
+                        <div class = "result-item">
+                            <span>Cost Per Person</span>
+                            <strong>$0.00</strong>
+                        </div>
+
+                        <div class = "result-item">
+                            <span>Daily Average</span>
+                            <strong>$0.00</strong>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </main>
+
+        <script src="script.js"></script>
+    </body>
+</html>
