@@ -11,26 +11,44 @@ const extraPercentInput = document.getElementById("extraPercent");
 
 const errorMessage = document.getElementById("errorMessage");
 
+
+const summaryTitle = document.getElementById("summaryTitle");
+
+const previewDestination = document.getElementById("previewDestination");
+const previewDays = document.getElementById("previewDays");
+const previewTravelers = document.getElementById("previewTravelers");
+
 budgetForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
-    const destination = destinationInput.value;
-    const days = daysInput.value;
-    const travelers = travelersInput.value;
-    const hotelCost = hotelCostInput.value;
-    const foodCost = foodCostInput.value;
-    const transportCost = transportCostInput.value;
-    const activityCost = activityCostInput.value;
-    const extraPercent = extraPercentInput.value;
+    const tripData = getTripData();
 
-    console.log("destination", destination);
-    console.log("Days:", days);
-    console.log("Travelers:", travelers);
-    console.log("Hotel Cost:", hotelCost);
-    console.log("Food Cost:", foodCost);
-    console.log("Transportation Cost:", transportCost);
-    console.log("Activity Cost:", activityCost);
-    console.log("Extra Percent:", extraPercent);
+    showTripPreview(tripData);
 
-    errorMessage.textContent = "Form values are connected. Calculations ill be added next."
+    console.log(tripData);
 });
+
+function getTripData() {
+    const tripData = {
+        destination: destinationInput.value.trim(),
+        days: Number(daysInput.value),
+        travelers: Number(travelersInput.value),
+        hotelCost: Number(hotelCostInput.value),
+        foodCost: Number(foodCostInput.value),
+        transportCost: Number(transportCostInput.value),
+        activityCost: Number(activityCostInput.value),
+        extraPercent: Number(extraPercentInput.value)
+    };
+
+    return tripData;
+}
+
+function showTripPreview(tripData) {
+    errorMessage.textContent = "";
+
+    summaryTitle.textContent = `${tripData.destination || "Your"} Trip Estimate`;
+
+    previewDestination.textContent = tripData.destination || "not entered";
+    previewDays.textContent = tripData.days || 0;
+    previewTravelers.textContent = tripData.travelers || 0;
+}

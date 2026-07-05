@@ -143,6 +143,27 @@ button:nth-child(3) {
     line-height: 1.6;
 }
 
+.trip-preview {
+    margin-bottom: 22px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #ecfeff;
+}
+
+.trip-preview h3 {
+    margin-bottom: 12px;
+    color: #0f766e;
+}
+
+.trip-preview .result-item {
+    margin-bottom: 10px;
+    background: white;
+}
+
+.trip-preview .result-item:last-child {
+    margin-bottom: 0;
+}
+
 .result-list {
     display: grid;
     gap: 12px;
