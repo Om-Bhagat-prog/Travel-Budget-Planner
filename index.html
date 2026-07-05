@@ -2,14 +2,14 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content = "width=device-width, initial-scale=1.0" />
 
-        <title> Travel Budget Planner</title>
+        <title>Travel Budget Planner</title>
 
-        <link rel="styleshet" href="style.css" />
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <main class="app">
+        <main class = "app">
             <section class = "hero">
                 <p class = "eyebrow">Travel Tools Collection</p>
                 <h1>Travel Budget Planner</h1>
@@ -20,98 +20,129 @@
                 </p>
             </section>
 
-            <section class="planner-layout">
-                <section class="card form-card">
+            <section class = "planner-layout">
+                <section class = "card form-card">
                     <h2>Trip Details</h2>
 
                     <form id = "budgetForm">
                         <div class = "form-group">
                             <label for = "destination">Destination</label>
-                            <input 
-                                type="text"
-                                id="destination"
-                                placeholder="Example: Boston"
+                            <input
+                            type = "text"
+                            id = "destination"
+                            name = "destination"
+                            placeholder = "Example: Boston"
+                            autocomplete = "off"
+                        />
+                        </div>
+
+                        <div class = "from-row">
+                            <div class = "form-group">
+                                <label for = "days">Number of Days</label>
+                                <input 
+                                type = "number"
+                                id = "days"
+                                name = "days"
+                                min = "1"
+                                placeholder = "Example: 3"
                             />
                         </div>
 
-                        <div class = "form row">
-                            <div class = "form-group">
-                                <label for = "days">Number of Days</label>
-                                <input
-                                    type = "number"
-                                    if = "days"
-                                    placeholder = "3"
-                                />
-                            </div>
-
-                            <div class = "form group">
-                                <label for = "travelers">Travelers</label>
-                                <input
-                                    type="number"
-                                    id="travelers"
-                                    placeholder="2"
-                                />
-                            </div>
+                        <div class = "form-group">
+                            <label for = "travelers">Travelers</label>
+                            <input
+                                type = "number"
+                                id = "travelers"
+                                name = "Travelers"
+                                min = "1"
+                                placeholder = "Example: 2"
+                            />
+                        </div>
                         </div>
 
                         <div class = "form-group">
-                            <label for = "hotelCost">Hotel Cost per Night ($)</label>
+                            <label for = "hotelCost">Hotel Cost Per Night ($)</label>
                             <input
-                                type="number"
-                                id="hotelCost"
-                                placeHolder="150"
+                                type = "number"
+                                id = "hotelCost"
+                                name = "hotelCost"
+                                min = "0"
+                                step = "0.01"
+                                placeholder = "Example; 150"
                             />
                         </div>
 
                         <div class = "form-group">
                             <label for = "foodCost">Food Cost Per Person Per Day ($)</label>
-                            <input
-                                type="number"
-                                id="foodCost"
-                                placeHolder="40"
-                            />
+                            <input 
+                            type = "number"
+                            id = "foodCost"
+                            name = "foodCost"
+                            min = "0"
+                            step = "0.01"
+                            placeholder = "Example: 40"
+                        />
                         </div>
 
-                        <div class="form-group">
+                        <div class = "form-group">
                             <label for = "transportCost"> Transportation Cost ($)</label>
                             <input
-                                type="number"
-                                id="transportCost"
-                                placeholder="120"
+                                type = "number"
+                                id = "transportCost"
+                                name = "transportCost"
+                                min = "0"
+                                step = "0.01"
+                                placeholder = "Example: 120"
                             />
                         </div>
 
                         <div class = "form-group">
                             <label for = "activityCost">Activity Cost ($)</label>
                             <input
-                                type="number"
-                                id="activityCost"
-                                placeholder="200"
+                                type = "number"
+                                id = "activityCost"
+                                name = "activityCost"
+                                min = "0"
+                                step = "0.01"
+                                placeholder = "Example: 200"
                             />
                         </div>
 
                         <div class = "form-group">
-                            <label for = "extraPercent">Extra Budget Percentage (%)</label>
-                            <input
+                            <label for = "extraPercent"> Extra Budget Percentage (%)</label>
+                            <input 
                                 type = "number"
                                 id = "extraPercent"
-                                placeHolder="10"
+                                name = "extraPercent"
+                                min = "0"
+                                step = "1"
+                                placeholder = "Example: 10"
                             />
                         </div>
 
+                        <p id = "errorMessage" class = "error-message"></p>
+
                         <div class = "button-group">
-                            <button type = "submit">Calculate Budget</button>
-                            <button type = "button">Reset</button>
-                            <button type = "button">Print Summary</button>
+                            <button type = "submit" id = "calculateBtn">
+                                Calculate Budget
+                            </button>
+
+                            <button type = "button" id = "resetBtn">
+                                Reset
+                            </button>
+
+                            <button type = "button" id = "printBtn">
+                                Print Summary
+                            </button>
                         </div>
                     </form>
                 </section>
 
                 <section class = "card results-card">
                     <p class = "eyebrow">Budget Summary</p>
-                    <h2>Your Trip Estimate</h2>
+                    <h2 id = "summaryTitle">Your Trip Estimate</h2>
 
-                    <div class = "empty-results">
+                    <div class = "empty-results" id = "emptyResults">
                         <p>
                             Your budget results will appear here after you enter
                             your trip details and click calculate.
@@ -121,48 +152,47 @@
                     <div class = "result-list">
                         <div class = "result-item">
                             <span>Hotel Total</span>
-                            <strong>$0.00</strong>
+                            <strong id = "hotelTotal">$0.00</strong>
                         </div>
 
                         <div class = "result-item">
                             <span>Food Total</span>
-                            <strong>$0.00</strong>
+                            <strong id = "foodTotal">$0.00</strong>
                         </div>
 
                         <div class = "result-item">
                             <span>Transportation</span>
-                            <strong>$0.00</strong>
+                            <strong id = "transportTotal">$0.00</strong>
                         </div>
 
-                        <div class = "result-item">
+                        <div class="result-item">
                             <span>Activities</span>
-                            <strong>$0.00</strong>
+                            <strong id="activitiesTotal">$0.00</strong>
                         </div>
 
                         <div class = "result-item">
                             <span>Extra Budget</span>
-                            <strong>$0.00</strong>
+                            <strong id = "extraTotal">$0.00</strong>
                         </div>
 
                         <div class = "result-item total">
                             <span>Total Trip Cost</span>
-                            <strong>$0.00</strong>
+                            <strong id = "totalCost">$0.00</strong>
                         </div>
 
                         <div class = "result-item">
                             <span>Cost Per Person</span>
-                            <strong>$0.00</strong>
+                            <strong id = "costPerPerson">$0.00</strong>
                         </div>
 
                         <div class = "result-item">
                             <span>Daily Average</span>
-                            <strong>$0.00</strong>
+                            <strong id = "dailyAverage">$0.00</strong>
                         </div>
                     </div>
                 </section>
             </section>
         </main>
-
-        <script src="script.js"></script>
-    </body>
+        <script src = "script.js"></script>
+    </body>    
 </html>
