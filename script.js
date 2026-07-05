@@ -22,10 +22,14 @@ budgetForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
     const tripData = getTripData();
+    const budget = calculateBudget(tripData);
 
     showTripPreview(tripData);
 
-    console.log(tripData);
+    console.log("Trip Data:", tripData);
+    console.log("Budget:", budget);
+
+    errorMessage.textContent = "Budget calculations are working. Results display comes next.";
 });
 
 function getTripData() {
@@ -41,6 +45,40 @@ function getTripData() {
     };
 
     return tripData;
+}
+
+function calculateBudget(tripData) {
+    const hotelTotal = tripData.days * tripData.hotelCost;
+
+    const foodTotal = tripData.days * tripData.travelers * tripData.foodCost;
+
+    const transportTotal = tripData.transportCost;
+
+    const activitiesTotal = tripData.activityCost;
+
+    const subtotal = hotelTotal + foodTotal + transportTotal + activitiesTotal;
+
+    const extraTotal = subtotal * (tripData.extraPercent / 100);
+
+    const totalCost = subtotal + extraTotal;
+
+    const costPerPerson = totalCost / tripData.travelers;
+
+    const dailyAverage = totalCost / tripData.days;
+
+    const budget = {
+        hotelTotal: hotelTotal,
+        foodTotal: foodTotal,
+        transportTotal: transportTotal,
+        activitiesTotal: activitiesTotal,
+        subtotal: subtotal,
+        extraTotal: extraTotal,
+        totalCost: totalCost,
+        costPerPerson: costPerPerson,
+        dailyAverage: dailyAverage
+    };
+
+    return budget;
 }
 
 function showTripPreview(tripData) {
