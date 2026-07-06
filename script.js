@@ -17,19 +17,33 @@ const summaryTitle = document.getElementById("summaryTitle");
 const previewDestination = document.getElementById("previewDestination");
 const previewDays = document.getElementById("previewDays");
 const previewTravelers = document.getElementById("previewTravelers");
+const hotelTotalElement = document.getElementById("hotelTotal");
+const foodTotalElement = document.getElementById("foodTotal");
+const transportTotalElement = document.getElementById("transportTotal");
+const activitiesTotalElement = document.getElementById("activitiesTotal");
+const extraTotalElement = document.getElementById("extraTotal");
+const totalCostElement = document.getElementById("totalCost");
+const costPerPersonElement = document.getElementById("costPerPerson");
+const dailyAverageElement = document.getElementById("dailyAverage");
 
 budgetForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
     const tripData = getTripData();
+
+    if (!isValidTripData(tripData)) {
+        return;
+    }
+
     const budget = calculateBudget(tripData);
 
     showTripPreview(tripData);
+    showBudgetResults(budget);
 
     console.log("Trip Data:", tripData);
     console.log("Budget:", budget);
 
-    errorMessage.textContent = "Budget calculations are working. Results display comes next.";
+    errorMessage.textContent = "";
 });
 
 function getTripData() {
@@ -45,6 +59,46 @@ function getTripData() {
     };
 
     return tripData;
+}
+
+function isValidTripData(tripData) {
+    errorMessage.textContent = "";
+
+    if (tripData.destination === "") {
+        showError("Please enter a destination");
+        return false;
+    }
+
+    if (tripData.days < 1) {
+        showError("Number of days must be at least 1.");
+        return false;
+    }
+
+    if (tripData.travelers < 1) {
+        showError("Number of travelers must be at least 1.");
+        return false;
+    }
+
+    if (hasNegativeCost(tripData)) {
+        showError("Costs and extra budget percentage cannot be negative");
+        return false;
+    }
+
+    return true;
+}
+
+function hasNegativeCost(tripData) {
+    return (
+        tripData.hotelCost < 0 ||
+        tripData.foodCost < 0 ||
+        tripData.transportCost < 0 ||
+        tripData.activityCost < 0 ||
+        tripData.extraPercent < 0
+    );
+}
+
+function showError(message) {
+    errorMessage.textContent = message;
 }
 
 function calculateBudget(tripData) {
@@ -79,6 +133,24 @@ function calculateBudget(tripData) {
     };
 
     return budget;
+}
+
+function showBudgetResults(budget) {
+    hotelTotalElement.textContent = formatMoney(budget.hotelTotal);
+    foodTotalElement.textContent = formatMoney(budget.foodTotal);
+    transportTotalElement.textContent = formatMoney(budget.transportTotal);
+    activitiesTotalElement.textContent = formatMoney(budget.activitiesTotal);
+    extraTotalElement.textContent = formatMoney(budget.extraTotal);
+    totalCostElement.textContent = formatMoney(budget.totalCost);
+    costPerPersonElement.textContent = formatMoney(budget.costPerPerson);
+    dailyAverageElement.textContent = formatMoney(budget.dailyAverage);
+}
+
+function formatMoney(amount) {
+    return amount.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+    });
 }
 
 function showTripPreview(tripData) {
