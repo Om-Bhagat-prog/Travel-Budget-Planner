@@ -26,6 +26,8 @@ const totalCostElement = document.getElementById("totalCost");
 const costPerPersonElement = document.getElementById("costPerPerson");
 const dailyAverageElement = document.getElementById("dailyAverage");
 
+
+const budgetLabel = document.getElementById("budgetLabel");
 budgetForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -144,6 +146,23 @@ function showBudgetResults(budget) {
     totalCostElement.textContent = formatMoney(budget.totalCost);
     costPerPersonElement.textContent = formatMoney(budget.costPerPerson);
     dailyAverageElement.textContent = formatMoney(budget.dailyAverage);
+
+    updateBudgetLabel(budget.costPerPerson);
+}
+
+function updateBudgetLabel(costPerPerson) {
+    budgetLabel.classList.remove("budget", "standard", "expensive");
+
+    if (costPerPerson < 500) {
+        budgetLabel.textContent = "Budget";
+        budgetLabel.classList.add("budget");
+    } else if (costPerPerson <= 1200) {
+        budgetLabel.textContent = "Standard";
+        budgetLabel.classList.add("standard");
+    } else {
+        budgetLabel.textContent = "Expensive";
+        budgetLabel.classList.add("expensive");
+    }
 }
 
 function formatMoney(amount) {
