@@ -53,9 +53,6 @@ budgetForm.addEventListener("submit", function(event) {
     showBudgetResults(budget);
     saveTrip(tripData);
 
-    console.log("Trip Data: ", tripData);
-    console.log("Budget:", budget);
-
     errorMessage.textContent = "";
 });
 
@@ -191,7 +188,9 @@ function loadSavedTrip() {
 
     destinationInput.value = tripData.destination;
     daysInput.value = tripData.days;
-    travelersInput.value = tripData.hotelCost;
+    travelersInput.value = tripData.travelers;
+    hotelCostInput.value = tripData.hotelCost;
+    foodCostInput.value = tripData.foodCost;
     foodCostInput.value = tripData.foodCost;
     transportCostInput.value = tripData.transportCost;
     activityCostInput.value = tripData.activityCost;
