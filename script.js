@@ -1,5 +1,8 @@
 const budgetForm = document.getElementById("budgetForm");
 
+const resetBtn = document.getElementById("resetBtn");
+const printBtn = document.getElementById("printBtn");
+
 const destinationInput = document.getElementById("destination");
 const daysInput = document.getElementById("days");
 const travelersInput = document.getElementById("travelers");
@@ -10,7 +13,6 @@ const activityCostInput = document.getElementById("activityCost");
 const extraPercentInput = document.getElementById("extraPercent");
 
 const errorMessage = document.getElementById("errorMessage");
-
 
 const summaryTitle = document.getElementById("summaryTitle");
 
@@ -26,8 +28,16 @@ const totalCostElement = document.getElementById("totalCost");
 const costPerPersonElement = document.getElementById("costPerPerson");
 const dailyAverageElement = document.getElementById("dailyAverage");
 
+const hotelBar = document.getElementById("hotelBar");
+const foodBar = document.getElementById("foodBar");
+const transportBar = document.getElementById("transportBar");
+const activitiesBar = document.getElementById("activitiesBar");
+const extraBar = document.getElementById("extraBar");
 
 const budgetLabel = document.getElementById("budgetLabel");
+
+const STORAGE_KEY = "travelBudgetPlannerData";
+
 budgetForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -41,11 +51,26 @@ budgetForm.addEventListener("submit", function(event) {
 
     showTripPreview(tripData);
     showBudgetResults(budget);
+    saveTrip(tripData);
 
-    console.log("Trip Data:", tripData);
+    console.log("Trip Data: ", tripData);
     console.log("Budget:", budget);
 
     errorMessage.textContent = "";
+});
+
+resetBtn.addEventListener("click", function() {
+    budgetForm.reset();
+    localStorage.removeItem(STORAGE_KEY);
+    clearResults();
+});
+
+printBtn.addEventListener("click", function() {
+    window.print();
+});
+
+window.addEventListener("load", function() {
+    loadSavedTrip();
 });
 
 function getTripData() {
@@ -147,7 +172,58 @@ function showBudgetResults(budget) {
     costPerPersonElement.textContent = formatMoney(budget.costPerPerson);
     dailyAverageElement.textContent = formatMoney(budget.dailyAverage);
 
+    updateSpendingBars(budget);
     updateBudgetLabel(budget.costPerPerson);
+}
+
+function saveTrip(tripData) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tripData));
+}
+
+function loadSavedTrip() {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+
+    if (!savedData) {
+        return;
+    }
+
+    const tripData = JSON.parse(savedData);
+
+    destinationInput.value = tripData.destination;
+    daysInput.value = tripData.days;
+    travelersInput.value = tripData.hotelCost;
+    foodCostInput.value = tripData.foodCost;
+    transportCostInput.value = tripData.transportCost;
+    activityCostInput.value = tripData.activityCost;
+    extraPercentInput.value = tripData.extraPercent;
+
+    if (!isValidTripData(tripData)) {
+        return;
+    }
+
+    const budget = calculateBudget(tripData);
+
+    showTripPreview(tripData);
+    showBudgetResults(budget);
+}
+
+function updateSpendingBars(budget) {
+    setBarWidth(hotelBar, budget.hotelTotal, budget.totalCost);
+    setBarWidth(foodBar, budget.foodTotal, budget.totalCost);
+    setBarWidth(transportBar, budget.transportTotal, budget.totalCost);
+    setBarWidth(activitiesBar, budget.activitiesTotal, budget.totalCost);
+    setBarWidth(extraBar, budget.extraTotal, budget.totalCost);
+}
+
+function setBarWidth(barElement, value, total) {
+    if (total <= 0) {
+        barElement.style.width = "0%";
+        return;
+    }
+
+    const percent = (value / total) * 100;
+    
+    barElement.style.width = `${percent}%`;
 }
 
 function updateBudgetLabel(costPerPerson) {
@@ -180,4 +256,32 @@ function showTripPreview(tripData) {
     previewDestination.textContent = tripData.destination || "not entered";
     previewDays.textContent = tripData.days || 0;
     previewTravelers.textContent = tripData.travelers || 0;
+}
+
+function clearResults() {
+    errorMessage.textContent = "";
+    
+    summaryTitle.textContent = "Your Trip Estimate";
+
+    previewDestination.textContent = "Not entered";
+    previewDays.textContent = "0";
+    previewTravelers.textContent = "0";
+
+    hotelTotalElement.textContent = "$0.00";
+    foodTotalElement.textContent = "$0.00";
+    transportTotalElement.textContent = "$0.00";
+    activitiesTotalElement.textContent = "$0.00";
+    extraTotalElement.textContent = "$0.00";
+    totalCostElement.textContent = "$0.00";
+    costPerPersonElement.textContent = "$0.00";
+    dailyAverageElement.textContent = "$0.00";
+
+    hotelBar.style.width = "0%";
+    foodBar.style.width = "0%";
+    transportBar.style.width = "0%";
+    activitiesBar.style.width = "0%";
+    extraBar.style.width = "0%";
+    
+    budgetLabel.textContent = "Not calculated";
+    budgetLabel.classList.remove("budget", "standard", "expensive");
 }

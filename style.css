@@ -204,6 +204,32 @@ button:nth-child(3) {
     background: #f8fafc;
 }
 
+.result-item-with-bar {
+    display: block;
+}
+
+.result-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.bar {
+    height: 10px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e2e8f0;
+}
+
+.bar-fill {
+    width: 0%;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #0284c7, #14b8a6);
+    transition: width 0.4s ease;
+}
+
 .result-item span {
     color: #475569;
     font-weight: 700;
@@ -252,5 +278,31 @@ button:nth-child(3) {
     .result-item {
         flex-direction: column;
         gap: 4px;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .hero,
+    .form-card,
+    .empty-results {
+        display: none;
+    }
+
+    .app {
+        width: 100%;
+        padding: 0;
+    }
+
+    .planner-layout {
+        display: block;
+    }
+
+    .results-card {
+        box-shadow: none;
+        border-radius: 0;
     }
 }
